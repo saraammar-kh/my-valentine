@@ -2,20 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Hakomy ❤️</title>
     <style>
-        body { text-align: center; font-family: 'Arial', sans-serif; background-color: #fce4ec; padding-top: 50px; overflow: hidden; height: 100vh; position: relative; }
-        h1 { color: #d81b60; font-size: 2rem; margin-bottom: 20px; line-height: 1.4; }
-        .buttons { display: flex; justify-content: center; gap: 20px; align-items: center; height: 100px; z-index: 10; position: relative; }
-        button { padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 30px; border: none; font-weight: bold; transition: 0.2s; }
-        #yesBtn { background-color: #ff4081; color: white; }
+        body { text-align: center; font-family: 'Arial', sans-serif; background-color: #fce4ec; padding-top: 50px; overflow: hidden; height: 100vh; position: relative; margin: 0; touch-action: manipulation; }
+        h1 { color: #d81b60; font-size: 2rem; margin-bottom: 20px; line-height: 1.4; position: relative; z-index: 10; pointer-events: none; }
+        .buttons { display: flex; justify-content: center; gap: 20px; align-items: center; height: 150px; z-index: 10; position: relative; }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 30px; border: none; font-weight: bold; transition: 0.2s; z-index: 20; touch-action: none; }
+        #yesBtn { background-color: #ff4081; color: white; box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4); }
         #noBtn { background-color: #90a4ae; color: white; position: absolute; transition: 0.1s; }
-        .bear-gif { width: 180px; border-radius: 20px; }
-        .heart { position: absolute; font-size: 30px; animation: float 3s linear forwards; z-index: 100; }
+        .bear-gif { width: 180px; border-radius: 20px; position: relative; z-index: 10; pointer-events: none; }
+        .heart { position: absolute; font-size: 35px; animation: float 3s linear forwards; z-index: 100; pointer-events: none; }
         @keyframes float {
             0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-100vh) scale(2); opacity: 0; }
         }
     </style>
 </head>
@@ -24,38 +24,31 @@
     <h1 id="question">Hakomy,<br>Will you be my Valentine? ❤️</h1>
     <div class="buttons">
         <button id="yesBtn" onclick="celebrate()">Yes 😍</button>
-        <button id="noBtn" onmouseover="moveButton()">No 😢</button>
+        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton()">No 😢</button>
     </div>
-
     <script>
         function moveButton() {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 100);
             const noBtn = document.getElementById('noBtn');
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 50);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
+            noBtn.style.left = Math.max(0, x) + 'px';
+            noBtn.style.top = Math.max(0, y) + 'px';
         }
-
         function celebrate() {
             document.getElementById('question').innerHTML = "I knew it! <br>Love you Hakomy! ❤️💋✨";
             document.querySelector('.buttons').style.display = 'none';
             document.body.style.backgroundColor = "#ffc1cc";
-            
-            // إنشاء القلوب والبوسات
-            for (let i = 0; i < 50; i++) {
-                setTimeout(createHeart, i * 100);
-            }
+            for (let i = 0; i < 70; i++) { setTimeout(createHeart, i * 80); }
         }
-
         function createHeart() {
-            const items = ['❤️', '💖', '💋', '✨', '🌹', '😘'];
+            const items = ['❤️', '💖', '💋', '✨', '🌹', '😘', '💓'];
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = items[Math.floor(Math.random() * items.length)];
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            setTimeout(() => heart.remove(), 4000);
         }
     </script>
 </body>
